@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Product;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,20 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/products', function() {
-    return Product::all();
-});
+//This is adding each route seperately, so we can control individually
+// Route::get('/products', [ProductController::class, 'index']);
+// Route::post('/products', [ProductController::class, 'store']);
+// Route::get('/products/id', [ProductController::class, 'show']);
 
-Route::post('/products', function() {
-    //Post method to create a product in the db
-    return Product::create([
-        'name' => 'Product 1',
-        'slug' => 'product-1',
-        'description' => 'This is the first product',
-        'sku' => 'PRO001',
-        'price' => 50.99
-    ]);
-});
+//This adds all methods from product controller as routes.
+Route::resource('products', ProductController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
