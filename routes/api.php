@@ -15,15 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Public Routes
 //This is adding each route seperately, so we can control individually
-// Route::get('/products', [ProductController::class, 'index']);
-// Route::post('/products', [ProductController::class, 'store']);
-// Route::get('/products/id', [ProductController::class, 'show']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/products/search/{name}', [ProductController::class, 'search']);
 
 //This adds all methods from product controller as routes.
-Route::resource('products', ProductController::class);
+//Route::resource('products', ProductController::class);
 
-Route::get('/products/search/{name}', [ProductController::class, 'search']);
+
+// Protected Routes
+// Middleware for a single route -> Route::middleware('auth:sanctum')->get('/products/search/{name}', [ProductController::class, 'search']);
+
+//Middleware for a group of routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::put('/products/{id}', [ProductController::class, 'update']);
+    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
