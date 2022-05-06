@@ -89,4 +89,19 @@ class ProductController extends Controller
     {
         return Product::destroy($id);   
     }
+
+    /**
+     * Search for a name
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     * 
+     * request: GET
+     * url: '/products/search/{$name}'
+     * opt: pass in a search query (name) and get a sql where like response
+     */
+    public function search($name)
+    {
+        return Product::where('name', 'like', '%' . $name . '%')->get();   
+    }
 }

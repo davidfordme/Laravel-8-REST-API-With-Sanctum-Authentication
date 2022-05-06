@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 //This adds all methods from product controller as routes.
 Route::resource('products', ProductController::class);
 
+Route::get('/products/search/{name}', [ProductController::class, 'search']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
