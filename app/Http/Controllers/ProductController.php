@@ -11,6 +11,10 @@ class ProductController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
+     * request: GET
+     * url: '/products'
+     * opt: all products
      */
     public function index()
     {
@@ -22,6 +26,10 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * 
+     * request: POST
+     * url: '/products'
+     * opt: Record new product to
      */
     public function store(Request $request)
     {
@@ -39,6 +47,10 @@ class ProductController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * request: GET
+     * url: /products/{$id}
+     * opt: single product
      */
     public function show($id)
     {
@@ -51,10 +63,16 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * request: PUT
+     * url: '/products/{$id}
+     * opt: update the selected product
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $product->update($request->all());
+        return $product;
     }
 
     /**
@@ -62,9 +80,13 @@ class ProductController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * request: DELETE
+     * url: '/products/{$id}'
+     * opt: true/error response but deletes selected product
      */
     public function destroy($id)
     {
-        //
+        return Product::destroy($id);   
     }
 }
